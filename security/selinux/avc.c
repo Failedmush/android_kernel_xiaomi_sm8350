@@ -741,7 +741,10 @@ static void avc_audit_post_callback(struct audit_buffer *ab, void *a)
 	       goto bypass_orig_flow;
 	}
 #endif
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5b825ca8e961 (fs: Patch kernel with susfs 1.5.9)
 	if (rc)
 		audit_log_format(ab, " tsid=%d", sad->tsid);
 	else {
@@ -749,9 +752,12 @@ static void avc_audit_post_callback(struct audit_buffer *ab, void *a)
 		kfree(scontext);
 	}
 
+<<<<<<< HEAD
 
 	audit_log_format(ab, " tclass=%s", secclass_map[sad->tclass-1].name);
 
+=======
+>>>>>>> 5b825ca8e961 (fs: Patch kernel with susfs 1.5.9)
 #ifdef CONFIG_KSU_SUSFS
 bypass_orig_flow:
 #endif
