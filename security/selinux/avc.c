@@ -41,6 +41,18 @@
 #define avc_cache_stats_incr(field)	do {} while (0)
 #endif
 
+<<<<<<< HEAD
+=======
+#undef CREATE_TRACE_POINTS
+#include <trace/hooks/avc.h>
+
+#ifdef CONFIG_KSU_SUSFS
+extern u32 susfs_ksu_sid;
+extern u32 susfs_kernel_sid;
+bool susfs_is_avc_log_spoofing_enabled = false;
+#endif
+
+>>>>>>> 5b825ca8e961 (fs: Patch kernel with susfs 1.5.9)
 struct avc_entry {
 	u32			ssid;
 	u32			tsid;
@@ -717,8 +729,22 @@ static void avc_audit_post_callback(struct audit_buffer *ab, void *a)
 		kfree(scontext);
 	}
 
+<<<<<<< HEAD
 	rc = security_sid_to_context(sad->state, sad->tsid, &scontext,
 				     &scontext_len);
+=======
+	rc = security_sid_to_context(sad->state, sad->tsid, &tcontext,
+				     &tcontext_len);
+#ifdef CONFIG_KSU_SUSFS
+	if (unlikely(sad->tsid == susfs_ksu_sid && susfs_is_avc_log_spoofing_enabled)) {
+	       if (rc)
+		       audit_log_format(ab, " tsid=%d", susfs_kernel_sid);
+	       else
+		       audit_log_format(ab, " tcontext=%s", "u:r:kernel:s0");
+	       goto bypass_orig_flow;
+	}
+#endif
+>>>>>>> 5b825ca8e961 (fs: Patch kernel with susfs 1.5.9)
 	if (rc)
 		audit_log_format(ab, " tsid=%d", sad->tsid);
 	else {
@@ -726,7 +752,15 @@ static void avc_audit_post_callback(struct audit_buffer *ab, void *a)
 		kfree(scontext);
 	}
 
+<<<<<<< HEAD
 	audit_log_format(ab, " tclass=%s", secclass_map[sad->tclass-1].name);
+=======
+#ifdef CONFIG_KSU_SUSFS
+bypass_orig_flow:
+#endif
+	tclass = secclass_map[sad->tclass-1].name;
+	audit_log_format(ab, " tclass=%s", tclass);
+>>>>>>> 5b825ca8e961 (fs: Patch kernel with susfs 1.5.9)
 
 	if (sad->denied)
 		audit_log_format(ab, " permissive=%u", sad->result ? 0 : 1);
