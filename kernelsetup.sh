@@ -14,7 +14,6 @@ KERNEL_DIR="$SCRIPT_DIR"
 PATCH_FILE="$SCRIPT_DIR/patches/latest_ksu.patch"
 SUSFS_PATCH_FILE="$SCRIPT_DIR/patches/susfs_1.5.9_patch.patch"
 
-<<<<<<< HEAD
 # --- Step 1: Download and run the KernelSU-Next setup script ---
 # The setup script will clone the KernelSU-Next repository into the current directory.
 # We run this from SCRIPT_DIR to ensure it's cloned into kernel/xiaomi/sm8350/
@@ -22,8 +21,7 @@ echo "--- Downloading and setting up KernelSU-Next..."
 cd "$SCRIPT_DIR"
 curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -
 echo "--- KernelSU-Next setup complete."
-=======
->>>>>>> 56f046767eb0 (patches: Update patches for susfs 1.5.9)
+
 
 # --- Function to patch the local kernel with susfs ---
 patch_kernel() {
